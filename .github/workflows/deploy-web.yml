@@ -3,7 +3,7 @@ name: Deploy Web
 on:
   push:
     branches: [ main ]
-    paths: [ '*.zip' ]
+    paths: [ '*.zip', 'loan-manager/**' ]
   workflow_dispatch:
 permissions:
   contents: read
@@ -32,6 +32,8 @@ jobs:
           mkdir site
           cp -r "$(dirname "$IDX")"/. site/
           touch site/.nojekyll
+          # Loan Manager (Arthasidhi) web app — alag folder me
+          cp -r loan-manager site/loan-manager
           ls -la site site/js
       - uses: actions/configure-pages@v5
         with:
