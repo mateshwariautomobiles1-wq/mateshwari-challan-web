@@ -11652,6 +11652,8 @@ $('#restoreFile').onchange = async e => { const f = e.target.files[0]; if (!f) r
 /* ===== Strong login: mandatory login, first-run admin setup, captcha, lockout, idle auto-logout ===== */
 (function () {
   if (typeof window.vLogin !== 'function' || typeof window.needLogin !== 'function') return;
+  /* APK = standalone offline app: login with local ID/Password (not the desktop Live Server) unless Live mode is switched on in Settings */
+  try { if (typeof liveStaff === 'function' && typeof LIVE !== 'undefined') { window.liveStaff = function () { return EDITION === 'staff' && !!(LIVE.cfg && LIVE.cfg.on) }; if (IS_ANDROID && !(LIVE.cfg && LIVE.cfg.on)) DEV_TAG = '' } } catch (e) { }
   var LOCK_KEY = 'lm_lgLock', MAX_TRY = 5, BASE_LOCK = 5 * 60 * 1000, IDLE_MS = 15 * 60 * 1000;
   var CH = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   function $q(s, r) { return (r || document).querySelector(s) }
